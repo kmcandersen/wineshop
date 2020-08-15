@@ -1,8 +1,73 @@
 {
     "general": {
+        "shop": {
+            "title": "wineshop",
+            "description": "Find and buy your next favorite wine.",
+            "collection_label": "shop",
+            "featured_title": "Summer's Favorite Sips"
+        },
         "404": {
-            "title": "Not found",
-            "subtext_html": "The page you were looking for does not exist"
+            "error_code": "404",
+            "title": "We couldn’t find that page. Try searching instead?"
+        },
+        "search": {
+            "message": "What are you looking for?",
+            "placeholder": "search wineshop"
+        }
+    },
+    "header": {
+        "nav": {
+            "cart": "Cart",
+            "search": "Search"
+        }
+    },
+    "list": {
+        "filled": {
+            "title": "{{ resultCount }}results",
+            "filter": "Filter by",
+            "more": "Show more"
+        },
+        "empty": {
+            "title": "No results",
+            "message": "Search again?"
+        }
+    },
+    "product": {
+        "labels": {
+            "origin": "Origin",
+            "winery": "Winery",
+            "varietal": "Varietal",
+            "price": "Price",
+            "score": "Score"
+        },
+        "form": {
+            "button": "Add to Cart",
+            "sold_out": "Sorry, this wine is sold out."
+        }
+    },
+    "cart": {
+        "empty": {
+            "message": "Your cart is empty."
+        },
+        "filled": {
+            "subtotal": "Subtotal",
+            "tax_shipping": "Tax and shipping will be calculated during checkout.",
+            "button": "Checkout"
+        }
+    },
+    "footer": {
+        "nav": {
+            "about": "About Us",
+            "service": "Customer Service",
+            "shipping": "Shipping Guide",
+            "returns": "Returns & Exchanges"
+        },
+        "bottom": {
+            "copyright": "© Wineshop. All Rights Reserved.",
+            "nav": {
+                "terms": "Terms and Conditions",
+                "privacy": "Privacy Policy"
+            }
         }
     }
 }
