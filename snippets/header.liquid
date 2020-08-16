@@ -1,0 +1,12 @@
+<header class="header-global">
+    <a href="/" class="logo">
+        <img src="{{ 'logo.svg' | asset_url }}" alt="{{ 'general.shop.title' | t }}"/>
+    </a>
+    <a href="/search" class="search">
+        <img src="{{ 'mag-glass.svg' | asset_url }}" alt="{{ 'header.nav.search' | t }}"/>
+    </a>
+    <a href="/cart" class="cart">
+        <img src="{{ 'cart.svg' | asset_url }}" alt="{{ 'header.nav.cart' | t }}"/>
+    </a>
+    <p>{{ cart.item_count }}</p>
+</header>
