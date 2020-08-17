@@ -2,7 +2,7 @@
     "general": {
         "shop": {
             "title": "wineshop",
-            "description": "Find and buy your next favorite wine.",
+            "headline": "Find and buy your next favorite wine.",
             "collection_label": "shop",
             "featured_title": "Summer's Favorite Sips"
         },
@@ -56,18 +56,8 @@
         }
     },
     "footer": {
-        "nav": {
-            "about": "About Us",
-            "service": "Customer Service",
-            "shipping": "Shipping Guide",
-            "returns": "Returns & Exchanges"
-        },
         "bottom": {
-            "copyright": "© Wineshop. All Rights Reserved.",
-            "nav": {
-                "terms": "Terms and Conditions",
-                "privacy": "Privacy Policy"
-            }
+            "copyright": "© Wineshop. All Rights Reserved."
         }
     }
 }

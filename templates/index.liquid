@@ -1,10 +1,48 @@
-{% for product in collections.frontpage.products limit:4 %}
-  <div>
-    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
-    {{ product.price | money }}
-    {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
-    <a href="{{ product.url | within: collection }}">
-      <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
-    </a>
-  </div>
-{% endfor %}
+<div>
+    <div class="coll-panel">
+        <div class="home-headline">
+            <h1>{{ 'general.shop.headline' | t }}</h1>
+        </div>
+        <div class="coll-panel-reds">
+            <a href="/collections/reds">
+                <button class="coll-panel-btn">
+                    {{ 'general.shop.collection_label' | t | upcase }}
+                    {{ 'reds' | upcase }}
+                </button>
+            </a>
+        </div>
+        <div class="coll-panel-whites">
+            <a href="/collections/whites">
+                <button class="coll-panel-btn">
+                    {{ 'general.shop.collection_label' | t | upcase }}
+                    {{ 'whites' | upcase }}
+                </button>
+            </a>
+        </div>
+        <div class="coll-panel-roses">
+            <a href="/collections/roses">
+                <button class="coll-panel-btn">
+                    {{ 'general.shop.collection_label' | t | upcase }}
+                    {{ 'rosés' | upcase }}
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="featured-group">
+        <div class="featured-headline">
+            <h2>{{ 'general.shop.featured_title' | t }}</h2>
+        </div>
+
+        <div class="featured-cards">
+            {% for product in collections.summer-sips.products limit:4 %}
+                <div>
+                    <a href="{{ product.url }}">
+                        <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.title }}"/>
+                        <p>{{ product.title }}</p>
+                        <p>{{ product.price | money_without_trailing_zeros }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
