@@ -34,15 +34,18 @@
     },
     "product": {
         "labels": {
-            "origin": "Origin",
-            "winery": "Winery",
-            "varietal": "Varietal",
-            "price": "Price",
-            "score": "Score"
+            "origin": "Origin:",
+            "winery": "Winery:",
+            "varietal": "Varietal:",
+            "price": "Price:",
+            "score": "Score:"
         },
         "form": {
             "button": "Add to Cart",
             "sold_out": "Sorry, this wine is sold out."
+        },
+        "recommendations": {
+            "rec_title": "May we recommend..."
         }
     },
     "cart": {

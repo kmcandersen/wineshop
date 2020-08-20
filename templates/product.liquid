@@ -1,29 +1,126 @@
-{% assign current_variant = product.selected_or_first_available_variant %}
-{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
-<img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
-{% for image in product.images %}
-  <a href="{{ image.src | img_url: 'large' }}">
-    <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-  </a>
-{% endfor %}
-<h1>{{ product.title }}</h1>
-<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-  <select name="id" id="productSelect">
-    {% for variant in product.variants %}
-      {% if variant.available %}
-        <option value="{{ variant.id }}">
-          {{ variant.title }} - {{ variant.price | money_with_currency }}
-        </option>
-      {% else %}
-        <option disabled="disabled">
-          {{ variant.title }} - sold out
-        </option>
-      {% endif %}
-    {% endfor %}
-  </select>
-  {{ current_variant.price | money }}
-  <label for="Quantity">quantity</label>
-  <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  <button type="submit" name="add" id="AddToCart">Add to cart</button>
-</form>
-<div>{{ product.description }}</div>
+<div>
+
+    <div class="product-info">
+
+        <div id="product-main-img">
+            <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ featured_image.alt | escape }}"/>
+        </div>
+
+        <div class="product-details">
+            {% for collection in product.collections %}
+                {% case collection.title %}
+                    {% when 'Reds' %}
+                        <hr class="reds-bar"/>
+                    {% when 'Whites' %}
+                        <hr class="whites-bar"/>
+                    {% when 'Rosés' %}
+                        <hr class="roses-bar"/>
+                {% endcase %}
+            {% endfor %}
+
+            <div>
+                <h3>{{ product.title }}</h3>
+                <p id="origin-line">{{ 'product.labels.origin' | t | upcase }}
+                    {% for tag in product.tags %}
+                        {% if tag contains 'region' %}
+                            {% assign word = tag | split: '-' %}
+                            <span class="tag tag-p" id="tag-region">{{ word[1] }},
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                    {% for tag in product.tags %}
+                        {% if tag contains 'country' %}
+                            {% assign word = tag | split: '-' %}
+                            <span class="tag tag-p" id="tag-country">{{ word[1] }}</span>
+                        {% endif %}
+                    {% endfor %}
+
+                </p>
+                <p>{{ 'product.labels.winery' | t | upcase }}
+                    {{ product.vendor }}</p>
+                <p>{{ 'product.labels.varietal' | t | upcase }}
+                    {{ product.type }}</p>
+                <p>{{ 'product.labels.price' | t | upcase }}
+                    <span class="price">{{ product.price | money_without_trailing_zeros }}</span>
+                </p>
+                <p>{{ 'product.labels.score' | t | upcase }}
+                    {% for tag in product.tags %}
+                        {% if tag contains 'rating' %}
+                            {% assign word = tag | split: '-' %}
+                            <span class="tag tag-p">{{ word[1] }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+
+            <div class="tag-group">
+                {% for tag in product.tags %}
+                    {% unless tag contains '-' %}
+                        <span class="tag tag-label">{{ tag }}</span>
+                    {% endunless %}
+                {% endfor %}
+            </div>
+
+            <div class="product-description">
+                {{ product.description }}
+            </div>
+        </div>
+
+        <div class="product-images">
+            <img src="{{ product.images[1]| img_url: 'medium' }}"/>
+        </div>
+
+        <div class="product-add">
+
+            {% for variant in product.variants %}
+                {{ variant.title }}
+                {{ variant.inventory_quantity }}
+            {% endfor %}
+
+
+            <br/>
+
+            <div class="option-row">
+                <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form">
+                    <div class="option-fieldset">
+                        <div class="visually-hidden">
+                            <input type="number" class="js-quantity-field" id="Quantity" name="quantity" value="1" min="1" {% if product.variants.size == 1 %} max="{{ product.variants.first.inventory_quantity }}" {% endif %}/>
+                        </div>
+                        <button class="quantity-button js-quantity-button minus" type="button" disabled>
+                            &ndash;
+                        </button>
+
+                        <span class="quantity-text js-quantity-text">
+                            1
+                        </span>
+
+                        <button class="quantity-button js-quantity-button plus" type="button">
+                            +
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" name="add" id="add-to-cart-button" {% if product.variants.size > 1 %} disabled {% endif %}>{{ 'product.form.button' | t | upcase }}</button>
+            </form>
+        </div>
+
+    </div>
+    <hr/>
+    <div class="featured-group">
+        <div class="featured-headline">
+            <h2>{{ 'product.recommendations.rec_title' | t }}</h2>
+        </div>
+
+        <div class="featured-cards">
+            {% for product in collections.summer-sips.products limit:4 %}
+                <div>
+                    <a href="{{ product.url }}">
+                        <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.title }}"/>
+                        <p>{{ product.title }}</p>
+                        <p>{{ product.price | money_without_trailing_zeros }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

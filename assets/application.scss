@@ -1,5 +1,87 @@
-// put your styles here
+$maroon: #B71010;
+$pink: #EA9999;
+$gold: #F4BE31;
+
+
+
+
+p, .tag-group, .footer-nav a {
+    font-family: 'Lato', serif; 
+}
+
+a, a:link, a:visited {
+    text-decoration: none;
+}
+
 h1, h2 {
     font-family: 'Playfair Display', serif;
     font-style: italic;
+}
+
+h3 {
+    font-family: 'Lato', serif;
+    font-weight: bold;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.product-details hr {
+    display: inline-block;
+    text-align: left;
+    border-style: none;
+    width: 50px;
+    border-top: 7px solid gray;
+}
+
+hr.reds-bar {
+    border-top: 7px solid $maroon;
+}
+hr.whites-bar {
+    border-top: 7px solid $gold;
+}
+hr.roses-bar {
+    border-top: 7px solid $pink;
+}
+
+.product-description {
+    font-style: italic;
+}
+
+.quantity-button {
+
+
+    &:disabled {
+        opacity: 0.5;
+    }
+    &:not(:disabled):hover {
+        color: white;
+    }
+}
+
+.tag {
+    text-transform: capitalize;
+}
+
+.tag-label {
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: .8em;
+    padding: 3px 10px;
+    margin: 3px;
+}
+
+.product-details * .price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.flag-icon {
+    width: 1em;
+    margin-left: 3px;
 }
