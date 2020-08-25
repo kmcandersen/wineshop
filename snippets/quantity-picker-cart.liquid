@@ -1,0 +1,21 @@
+<div class="option-row">
+
+    <div class="option-fieldset">
+        <div class="visually-hidden">
+
+            <input type="number" class="js-quantity-field" id="Quantity" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.variants.first.inventory_quantity }}"/>
+            <input type="text" name="id" value="{{ item.product.id }}"/>
+        </div>
+
+        {%- comment -%}shouldn't be disabled by default--need condition before JS event; unsure if Product page code will wk{%- endcomment -%}
+        <button class="quantity-button js-quantity-button minus" type="button">
+            &ndash;
+        </button>
+        <span class="quantity-text js-quantity-text">
+            {{ item.quantity }}
+        </span>
+        <button class="quantity-button js-quantity-button plus" type="button">
+            +
+        </button>
+    </div>
+</div>

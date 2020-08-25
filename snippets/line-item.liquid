@@ -1,0 +1,35 @@
+<div class="line-item">
+
+    <div class="line-info">
+        <div class="line-image">
+            <a href="{{ item.url }}">
+                <img src="{{ item | img_url: '100x100' }}" alt="{{ item.title | escape }}"/>
+            </a>
+        </div>
+        <div class="line-info">
+            <a href="{{ item.url }}" class="line-title">
+                <span class="h3">{{ item.product.title }}</span>
+
+            </a>
+            <p>
+                {{ item.product.price | | money_without_trailing_zeros }}
+                ea x
+                {{ item.quantity }}
+            </p>
+        </div>
+        <div class="line-price">
+            <p>{{ item.line_price | | money_without_trailing_zeros }}</p>
+        </div>
+
+        <div class="line-controls">
+
+            {% include 'quantity-picker-cart' %}
+
+
+            <a class="remove-line js-remove-line" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                <img src="{{ 'x-remove.svg' | asset_url }}" alt="Remove"/>
+            </a>
+        </div>
+    </div>
+    <hr/>
+</div></div>

@@ -72,37 +72,14 @@
 
         <div class="product-add">
 
-            {% for variant in product.variants %}
-                {{ variant.title }}
-                {{ variant.inventory_quantity }}
-            {% endfor %}
 
+            <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form">
 
-            <br/>
+                {% include 'quantity-picker-product' %}
+                <button type="submit" name="add" id="add-to-cart-button">{{ 'product.form.button' | t | upcase }}</button>
 
-            <div class="option-row">
-                <form action="/cart/add" method="post" enctype="multipart/form-data" id="add-to-cart-form">
-                    <div class="option-fieldset">
-                        <div class="visually-hidden">
-                            <input type="number" class="js-quantity-field" id="Quantity" name="quantity" value="1" min="1" {% if product.variants.size == 1 %} max="{{ product.variants.first.inventory_quantity }}" {% endif %}/>
-                        </div>
-                        <button class="quantity-button js-quantity-button minus" type="button" disabled>
-                            &ndash;
-                        </button>
-
-                        <span class="quantity-text js-quantity-text">
-                            1
-                        </span>
-
-                        <button class="quantity-button js-quantity-button plus" type="button">
-                            +
-                        </button>
-                    </div>
-                </div>
-
-                <button type="submit" name="add" id="add-to-cart-button" {% if product.variants.size > 1 %} disabled {% endif %}>{{ 'product.form.button' | t | upcase }}</button>
-            </form>
-        </div>
+            </div>
+        </form>
 
     </div>
     <hr/>

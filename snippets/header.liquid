@@ -5,8 +5,9 @@
     <a href="/search" class="search">
         <img src="{{ 'mag-glass.svg' | asset_url }}" alt="{{ 'header.nav.search' | t }}"/>
     </a>
-    <a href="/cart" class="cart">
+    {% assign cart_text = 'cart.count.count_html' | t: itemCount:cart.item_count %}
+    <a href="/cart" class="cart-link js-cart-link text-link">
         <img src="{{ 'cart.svg' | asset_url }}" alt="{{ 'header.nav.cart' | t }}"/>
+        <span class="cart-text">{{ cart_text }}</span>
     </a>
-    <p>{{ cart.item_count }}</p>
 </header>

@@ -41,6 +41,7 @@
             "score": "Score:"
         },
         "form": {
+            "quantity": "Quantity",
             "button": "Add to Cart",
             "sold_out": "Sorry, this wine is sold out."
         },
@@ -49,15 +50,23 @@
         }
     },
     "cart": {
+        "count": {
+            "count_html": "<span class=\"js-cart-item-count\">{{ itemCount }}</span>"
+        },
+        "qty_picker": {
+            "button": "Update"
+        },
         "empty": {
-            "message": "Your cart is empty."
+            "title": "Your cart is empty",
+            "button": "Keep Shopping"
         },
         "filled": {
-            "subtotal": "Subtotal",
+            "title": "Your Cart",          
             "tax_shipping": "Tax and shipping will be calculated during checkout.",
+            "subtotal": "Subtotal",
             "button": "Checkout"
         }
-    },
+    },    
     "footer": {
         "bottom": {
             "copyright": "© Wineshop. All Rights Reserved."

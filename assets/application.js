@@ -1,7 +1,7 @@
 $(document).ready(function(){
-
+console.log('CART IS READY');
     let places = [
-        { Italy: { coords: [12, 43], code: 'it' } },
+        { 'Italy': { coords: [12, 43], code: 'it' } },
         { 'Napa Valley': { coords: [-95.712891, 37.09024] } },
         { 'Piedmont': { coords: [-95.712891, 37.09024] } },
         { 'Russian River Valley': { coords: [-95.712891, 37.09024] } },
@@ -22,13 +22,14 @@ $(document).ready(function(){
     }
 
     let getCoords = function(){
-        let mapPoint;
-        let region = document.getElementById("tag-region").innerText.slice(0, -2);
-        if(region){
-            mapPoint = region;
-        } else {
-            mapPoint = country; 
-        }
+        let
+        region = document.getElementById("tag-region").innerText.slice(0, -2);
+        mapPoint = region ? region : country;
+        // if(region){
+        //     mapPoint = region;
+        // } else {
+        //     mapPoint = country; 
+        // }
         for (let i = 0; i < places.length; i++) {
             for (let key in places[i]) {
                 if (key === mapPoint) {            
@@ -43,6 +44,7 @@ $(document).ready(function(){
     
     let 
         onQuantityButtonClick = function(event){
+            console.log('qty btn clicked!')
             let
                 $button = $(this),
                 $form = $button.closest('form'),
@@ -58,9 +60,11 @@ $(document).ready(function(){
                 //sets value but wo .change() doesn't trigger event (next func)
                 $quantity.val(quantityValue - 1).change();
             }
-        },
+        }
+        
 
         onQuantityFieldChange = function(event){
+            console.log('qty changed!')
             let
                 $field = $(this),
                 $form = $field.closest('form'),
@@ -71,41 +75,41 @@ $(document).ready(function(){
                 $plusButton = $form.find('.js-quantity-button.plus');
         
                 $quantityText.text(this.value);
-    
+   
             //minus unavailable if current qty = 1
             if(shouldDisableMinus){
                 $minusButton.prop('disabled', true);
             } else if ($minusButton.prop('disabled') === true) {
                 $minusButton.prop('disabled', false);
             }
-    
             //plus unavailable if current qty = max
             if(shouldDisablePlus){
                 $plusButton.prop('disabled', true);
-            } else if ($shouldDisablePlus.prop('disabled') === true) {
+            } 
+            else if ($plusButton.prop('disabled') === true) {
                 $plusButton.prop('disabled', false);
             }
         },
 
-        onVariantRadioChange = function(event){
-            let
-            $radio = $(this),
-            $form = $radio.closest('form'),
-            max = $radio.attr('data-inventory-quantity'),
-            $quantity = $form.find('.js-quantity-field');
-            $addToCartButton = $form.find('#add-to-cart-button');
+        // onVariantRadioChange = function(event){
+        //     let
+        //     $radio = $(this),
+        //     $form = $radio.closest('form'),
+        //     max = $radio.attr('data-inventory-quantity'),
+        //     $quantity = $form.find('.js-quantity-field');
+        //     $addToCartButton = $form.find('#add-to-cart-button');
     
-            if ($addToCartButton.prop('disabled') === true){
-                $addToCartButton.prop('disabled', false)
-            }
+        //     if ($addToCartButton.prop('disabled') === true){
+        //         $addToCartButton.prop('disabled', false)
+        //     }
     
-            //set max allowed cart qty to inventory qty
-            $quantity.attr('max', max);
+        //     //set max allowed cart qty to inventory qty
+        //     $quantity.attr('max', max);
     
-            if(parseInt($quantity.val()) > max) {
-                $quantity.val(max).change();
-            }    
-        },
+        //     if(parseInt($quantity.val()) > max) {
+        //         $quantity.val(max).change();
+        //     }    
+        // },
         onAddToCart = function(event){
             event.preventDefault();
             $.ajax({
@@ -117,69 +121,64 @@ $(document).ready(function(){
                 error: onError
             })
         },
-        onLineRemoved = function(event) {
+
+        onUpdateInCart = function(event){
             event.preventDefault();
-            let
-                $removeLink = $(this),
-                removeQuery = $removeLink.attr('href').split('change?')[1];
-            $.post('/cart/change.js', removeQuery, onCartUpdated, 'json');
+            $.ajax({
+                type: 'POST',
+                url: '/cart/update.js',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: onCartUpdated,
+                error: onError
+            })
         },
+        // onLineRemoved = function(event) {
+        //     event.preventDefault();
+        //     let
+        //         $removeLink = $(this),
+        //         removeQuery = $removeLink.attr('href').split('change?')[1];
+        //     $.post('/cart/change.js', removeQuery, onCartUpdated, 'json');
+        // },
         onCartUpdated = function(){
            $.ajax({
                type: 'GET',
                url: '/cart',
                context: document.body,
                success: function(context){
-                   let 
+
+                let 
+                //div on cart page that data-cart-item-count attr is on
                     $dataCartContents = $(context).find('.js-cart-page-contents'),
+                //html
                     dataCartHtml = $dataCartContents.html(),
+                //data attribute
                     dataCartItemCount = $dataCartContents.attr('data-cart-item-count'),
-                    $miniCartContents = $('.js-mini-cart-contents'),
+
+                //el to receive/display cart count
                     $cartItemCount = $('.js-cart-item-count');
-
+                //cmd to update cart count
                     $cartItemCount.text(dataCartItemCount);
-                    $miniCartContents.html(dataCartHtml);
-
-                    if(parseInt(dataCartItemCount) > 0){
-                        openCart();
-                    } else {
-                        closeCart();
-                    }
                }
            })
         },
         onError = function(XMLHttpRequest, textStatus){
             let data = XMLHttpRequest.responseJSON;
             alert(data.status + ' - ' + data.message + ': ' + data.description)
-        },
-        openCart = function() {
-            $('html').addClass('mini-cart-open')
-        },
-        closeCart = function() {
-            $('html').removeClass('mini-cart-open')
-        },
-        onCartButtonClick = function(event){
-            event.preventDefault();
-            let isCartOpen = $('html').hasClass('mini-cart-open');
-            if(!isCartOpen) {
-                openCart();
-            } else {
-                closeCart();
-            }
-        };
-        
-        
+        }
+            
+        $(document).on('click', '.js-quantity-button', onQuantityButtonClick);
 
-    $(document).on('click', '.js-quantity-button', onQuantityButtonClick);
+        $(document).on('change', '.js-quantity-field', onQuantityFieldChange);
 
-    $(document).on('change', '.js-quantity-field', onQuantityFieldChange);
-
-    $(document).on('change', '.js-variant-radio', onVariantRadioChange);
+    // $(document).on('change', '.js-variant-radio', onVariantRadioChange);
 
     $(document).on('submit', '#add-to-cart-form', onAddToCart);
 
-    $(document).on('click', '#mini-cart .js-remove-line', onLineRemoved);
+    $(document).on('submit', '#update-cart-form', onUpdateInCart);
 
-    $(document).on('click', '.js-cart-link, #mini-cart .js-keep-shopping', onCartButtonClick);
+    // $(document).on('click', '#mini-cart .js-remove-line', onLineRemoved);
+
+    // $(document).on('click', '.js-cart-link, #mini-cart .js-keep-shopping', onCartButtonClick);
 
 });

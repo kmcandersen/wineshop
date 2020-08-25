@@ -1,0 +1,23 @@
+<div class="option-row">
+
+    <div class="option-fieldset">
+        <div class="visually-hidden">
+
+            <input type="number" class="js-quantity-field" id="Quantity" name="quantity" value="1" min="1" max="{{ product.variants.first.inventory_quantity }}"/>
+            <input type="text" name="id" value="{{ product.variants.first.id }}"/>
+        </div>
+
+        <button class="quantity-button js-quantity-button minus" type="button" disabled>
+            &ndash;
+        </button>
+
+        <span class="quantity-text js-quantity-text">
+            1
+        </span>
+
+        <button class="quantity-button js-quantity-button plus" type="button">
+            +
+        </button>
+
+    </div>
+</div>
