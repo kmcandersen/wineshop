@@ -8,15 +8,13 @@
 
         <div class="product-details">
             {% for collection in product.collections %}
-                {% case collection.title %}
-                    {% when 'Reds' %}
-                        <hr class="reds-bar"/>
-                    {% when 'Whites' %}
-                        <hr class="whites-bar"/>
-                    {% when 'Rosés' %}
-                        <hr class="roses-bar"/>
-                {% endcase %}
+                {% assign coll-title = collection.title | handleize %}
+                {% if coll-title == 'reds' or coll-title == 'whites' or coll-title == 'roses' %}
+                    {% assign color = coll-title %}
+                {% endif %}
             {% endfor %}
+
+            <hr class="{{ color }}-bar"/>
 
             <div>
                 <h3>{{ product.title }}</h3>

@@ -21,5 +21,8 @@
             {{ content_for_layout }}
         </main>
         {% include 'footer' %}
+        {% if template contains 'product' %}
+            {{ 'geofuncs.js' | asset_url | script_tag }}
+        {% endif %}
     </body>
 </html>
